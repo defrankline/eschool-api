@@ -1,0 +1,34 @@
+server:
+  port: 9090
+spring:
+  main:
+    allow-circular-references: false
+  jpa:
+    properties:
+      jdbc:
+        time_zone: GMT+3
+      temp:
+        use_jdbc_metadata_defaults: false
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+  application:
+    name: eschool-api
+  datasource:
+    password: frank
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/eschool
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      idle-timeout: 600000
+      maximum-pool-size: 50
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      minimum-idle: 10
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+security:
+  jwt:
+    secret-key: cf68c17518ec62b49dae72407832d36055b51a33a98049e23d7f535e112291b3
+    expiration-time: '86400000'
