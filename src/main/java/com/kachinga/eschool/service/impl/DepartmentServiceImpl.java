@@ -1,6 +1,6 @@
 package com.kachinga.eschool.service.impl;
 
-import com.kachinga.eschool.config.UserContextService;
+import com.kachinga.eschool.security.UserContextService;
 import com.kachinga.eschool.dto.LoggedInUserDto;
 import com.kachinga.eschool.entity.Department;
 import com.kachinga.eschool.entity.School;

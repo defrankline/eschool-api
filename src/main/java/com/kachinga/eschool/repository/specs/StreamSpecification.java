@@ -16,4 +16,12 @@ public class StreamSpecification {
     public static Specification<Stream> byGradeLevelId(Long gradeLevelId) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("gradeLevel").get("id"), gradeLevelId);
     }
+
+    public static Specification<Stream> bySchoolId(Long schoolId) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("school").get("id"), schoolId);
+    }
+
+    public static Specification<Stream> findAll(Long schoolId,Long gradeLevelId) {
+        return bySchoolId(schoolId).and(byGradeLevelId(gradeLevelId));
+    }
 }

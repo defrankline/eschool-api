@@ -4,7 +4,7 @@ import com.kachinga.eschool.dto.*;
 import com.kachinga.eschool.entity.Role;
 import com.kachinga.eschool.entity.User;
 import com.kachinga.eschool.service.AuthenticationService;
-import com.kachinga.eschool.service.JwtService;
+import com.kachinga.eschool.security.JwtService;
 import com.kachinga.eschool.service.MenuItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

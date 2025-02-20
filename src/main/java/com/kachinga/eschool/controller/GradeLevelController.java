@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -28,12 +29,14 @@ public class GradeLevelController {
         return ApiResponse.list(data.getContent(), data.getTotalElements(), data.getTotalPages(), "Grade Levels");
     }
 
+    @PreAuthorize("hasRole('ROLE_ESCHOOL_SUPER_ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody GradeLevel gradeLevel) {
         GradeLevel created = gradeLevelService.save(gradeLevel);
         return ApiResponse.create(created, created.getId(), "Grade Level Created Successfully");
     }
 
+    @PreAuthorize("hasRole('ROLE_ESCHOOL_SUPER_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @Valid @RequestBody GradeLevel gradeLevel) {
         Optional<GradeLevel> row = gradeLevelService.findById(id);
@@ -54,6 +57,7 @@ public class GradeLevelController {
         return ApiResponse.notFound(id, "Grade Level Not found");
     }
 
+    @PreAuthorize("hasRole('ROLE_ESCHOOL_SUPER_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         Optional<GradeLevel> row = gradeLevelService.findById(id);

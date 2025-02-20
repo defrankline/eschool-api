@@ -23,4 +23,11 @@ public class Stream extends BaseModel {
 
     @Column(name = "grade_level_id", nullable = false)
     private Long gradeLevelId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "school_id", nullable = false, insertable = false, updatable = false)
+    private School school;
+
+    @Column(name = "school_id", nullable = false)
+    private Long schoolId;
 }

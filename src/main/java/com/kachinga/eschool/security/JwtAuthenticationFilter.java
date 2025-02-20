@@ -1,6 +1,5 @@
-package com.kachinga.eschool.config;
+package com.kachinga.eschool.security;
 
-import com.kachinga.eschool.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

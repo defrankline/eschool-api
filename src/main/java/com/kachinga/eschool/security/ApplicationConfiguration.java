@@ -1,4 +1,4 @@
-package com.kachinga.eschool.config;
+package com.kachinga.eschool.security;
 
 import com.kachinga.eschool.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

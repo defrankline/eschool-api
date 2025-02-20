@@ -1,4 +1,4 @@
-package com.kachinga.eschool.config;
+package com.kachinga.eschool.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

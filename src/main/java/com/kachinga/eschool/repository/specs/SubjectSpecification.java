@@ -21,15 +21,19 @@ public class SubjectSpecification {
         };
     }
 
-    public static Specification<Subject> bySchoolId(Long schoolId) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("school").get("id"), schoolId);
+    public static Specification<Subject> descriptionLike(String searchTerm) {
+        return (root, query, criteriaBuilder) -> {
+            String searchTermLowerCase = searchTerm.toLowerCase();
+            Expression<String> field = criteriaBuilder.lower(root.get("description"));
+            return criteriaBuilder.like(field, "%" + searchTermLowerCase + "%");
+        };
     }
 
     public static Specification<Subject> search(Long schoolId, String searchTerm) {
-        return bySchoolId(schoolId).and(nameLike(searchTerm).or(shortNameLike(searchTerm)));
+        return (nameLike(searchTerm).or(shortNameLike(searchTerm)));
     }
 
     public static Specification<Subject> search(String searchTerm) {
-        return nameLike(searchTerm).or(shortNameLike(searchTerm));
+        return nameLike(searchTerm).or(shortNameLike(searchTerm)).or(descriptionLike(searchTerm));
     }
 }

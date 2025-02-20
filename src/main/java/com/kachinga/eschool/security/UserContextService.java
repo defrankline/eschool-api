@@ -1,4 +1,4 @@
-package com.kachinga.eschool.config;
+package com.kachinga.eschool.security;
 
 import com.kachinga.eschool.dto.LoggedInUserDto;
 import com.kachinga.eschool.dto.MenuDto;
@@ -22,6 +22,12 @@ public class UserContextService {
     public UserContextService(UserRepository userRepository, MenuItemService menuItemService) {
         this.userRepository = userRepository;
         this.menuItemService = menuItemService;
+    }
+
+    public boolean isSuperAdmin() {
+        LoggedInUserDto loggedInUserDto = getCurrentUser();
+        List<String> roles = loggedInUserDto.getRoles();
+        return roles.contains("ROLE_ESCHOOL_SUPER_ADMIN") || roles.contains("ROLE_ESCHOOL_SUPERVISOR");
     }
 
     public LoggedInUserDto getCurrentUser() {

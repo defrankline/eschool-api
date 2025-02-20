@@ -1,8 +1,6 @@
 package com.kachinga.eschool.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +16,8 @@ public class School extends BaseModel {
 
     @Column(name = "name", unique = true, nullable = false)
     private String name;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "education_level_id",nullable = false)
+    private EducationLevel educationLevel;
 }

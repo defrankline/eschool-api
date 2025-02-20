@@ -35,6 +35,12 @@ public class StudentFeePayment extends BaseModel {
     @Column(name = "reference_number")
     private String referenceNumber;
 
+    @Column(name = "depositor", nullable = true)
+    private String depositor;
+
+    @Column(name = "control_number", nullable = true)
+    private String controlNumber;
+
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 }

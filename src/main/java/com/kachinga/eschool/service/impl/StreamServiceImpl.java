@@ -1,5 +1,7 @@
 package com.kachinga.eschool.service.impl;
 
+import com.kachinga.eschool.security.UserContextService;
+import com.kachinga.eschool.dto.LoggedInUserDto;
 import com.kachinga.eschool.entity.Stream;
 import com.kachinga.eschool.repository.StreamRepository;
 import com.kachinga.eschool.repository.specs.StreamSpecification;
@@ -15,15 +17,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StreamServiceImpl implements StreamService {
     private final StreamRepository streamRepository;
+    private final UserContextService userContextService;
 
     @Override
     public List<Stream> findAll(Long gradeLevelId) {
-        Specification<Stream> spec = Specification.where(StreamSpecification.byGradeLevelId(gradeLevelId));
+        LoggedInUserDto currentUser = userContextService.getCurrentUser();
+        Long schoolId = currentUser.getSchool().getId();
+        Specification<Stream> spec = Specification.where(StreamSpecification.findAll(schoolId,gradeLevelId));
         return streamRepository.findAll(spec);
     }
 
     @Override
     public Stream save(Stream stream) {
+        LoggedInUserDto currentUser = userContextService.getCurrentUser();
+        Long schoolId = currentUser.getSchool().getId();
+        stream.setSchoolId(schoolId);
         return streamRepository.save(stream);
     }
 

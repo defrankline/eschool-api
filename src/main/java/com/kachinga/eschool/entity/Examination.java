@@ -14,11 +14,23 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "semesters")
-public class Semester extends BaseModel {
+@Table(name = "examinations")
+public class Examination extends BaseModel {
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "academic_year_id", nullable = false)
+    private AcademicYear academicYear;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "grade_level_id", nullable = false)
+    private GradeLevel gradeLevel;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "examination_type_id",nullable = false)
+    private ExaminationType examinationType;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "start_date", nullable = false)
@@ -27,11 +39,4 @@ public class Semester extends BaseModel {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
-
-    @Column(name = "current", nullable = false)
-    private Boolean current;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "academic_year_id", nullable = false)
-    private AcademicYear academicYear;
 }

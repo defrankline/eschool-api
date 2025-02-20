@@ -1,8 +1,5 @@
 package com.kachinga.eschool.service.impl;
 
-import com.kachinga.eschool.config.UserContextService;
-import com.kachinga.eschool.dto.LoggedInUserDto;
-import com.kachinga.eschool.entity.School;
 import com.kachinga.eschool.entity.Subject;
 import com.kachinga.eschool.repository.SubjectRepository;
 import com.kachinga.eschool.repository.specs.SubjectSpecification;
@@ -20,14 +17,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
-    private final UserContextService userContextService;
 
 
     @Override
     public Page<Subject> findAll(String searchTerm, Pageable pageable) {
-        LoggedInUserDto currentUser = userContextService.getCurrentUser();
-        Long schoolId = currentUser.getSchool().getId();
-        Specification<Subject> spec = Specification.where(SubjectSpecification.bySchoolId(schoolId));
+        Specification<Subject> spec = Specification.where(null);
         if (searchTerm != null && !searchTerm.isEmpty()) {
             pageable = PageRequest.of(0, pageable.getPageSize(), pageable.getSort());
             spec = spec.and(SubjectSpecification.search(searchTerm));
@@ -37,9 +31,6 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public Subject save(Subject subject) {
-        LoggedInUserDto currentUser = userContextService.getCurrentUser();
-        School school = currentUser.getSchool();
-        subject.setSchool(school);
         return subjectRepository.save(subject);
     }
 

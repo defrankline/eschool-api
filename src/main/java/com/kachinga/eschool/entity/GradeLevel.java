@@ -11,13 +11,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "grade_levels", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "school_id"})})
+@Table(name = "grade_levels")
 public class GradeLevel extends BaseModel {
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "school_id", nullable = false)
-    private School school;
+    @JoinColumn(name = "education_level_id", nullable = false,insertable = false,updatable = false)
+    private EducationLevel educationLevel;
+
+    @Column(name = "education_level_id", nullable = false)
+    private Long educationLevelId;
 }

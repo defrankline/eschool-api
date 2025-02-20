@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -28,12 +29,14 @@ public class SubjectController {
         return ApiResponse.list(data.getContent(), data.getTotalElements(), data.getTotalPages(), "Subjects");
     }
 
+    @PreAuthorize("hasRole('ROLE_ESCHOOL_SUPER_ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Subject subject) {
         Subject created = subjectService.save(subject);
         return ApiResponse.create(created, created.getId(), "Subject Created Successfully");
     }
 
+    @PreAuthorize("hasRole('ROLE_ESCHOOL_SUPER_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @Valid @RequestBody Subject subject) {
         Optional<Subject> row = subjectService.findById(id);
@@ -54,6 +57,7 @@ public class SubjectController {
         return ApiResponse.notFound(id, "Subject Not found");
     }
 
+    @PreAuthorize("hasRole('ROLE_ESCHOOL_SUPER_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         Optional<Subject> row = subjectService.findById(id);

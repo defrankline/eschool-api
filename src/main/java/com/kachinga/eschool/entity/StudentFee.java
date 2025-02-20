@@ -36,6 +36,9 @@ public class StudentFee extends BaseModel {
     @Column(name = "outstanding_balance", nullable = false)
     private BigDecimal outstandingBalance;
 
+    @Column(name = "control_number", nullable = true, unique = true)
+    private String controlNumber;
+
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private FeeStatus status;

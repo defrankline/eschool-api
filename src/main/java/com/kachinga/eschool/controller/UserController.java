@@ -1,6 +1,6 @@
 package com.kachinga.eschool.controller;
 
-import com.kachinga.eschool.config.UserContextService;
+import com.kachinga.eschool.security.UserContextService;
 import com.kachinga.eschool.dto.LoggedInUserDto;
 import com.kachinga.eschool.service.UserService;
 import lombok.RequiredArgsConstructor;

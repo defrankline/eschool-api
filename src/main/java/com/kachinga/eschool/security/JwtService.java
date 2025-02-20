@@ -1,4 +1,4 @@
-package com.kachinga.eschool.service;
+package com.kachinga.eschool.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

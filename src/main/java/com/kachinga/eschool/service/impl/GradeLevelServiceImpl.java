@@ -1,7 +1,8 @@
 package com.kachinga.eschool.service.impl;
 
-import com.kachinga.eschool.config.UserContextService;
+import com.kachinga.eschool.security.UserContextService;
 import com.kachinga.eschool.dto.LoggedInUserDto;
+import com.kachinga.eschool.entity.EducationLevel;
 import com.kachinga.eschool.entity.GradeLevel;
 import com.kachinga.eschool.entity.School;
 import com.kachinga.eschool.repository.GradeLevelRepository;
@@ -26,8 +27,12 @@ public class GradeLevelServiceImpl implements GradeLevelService {
     @Override
     public Page<GradeLevel> findAll(String searchTerm, Pageable pageable) {
         LoggedInUserDto currentUser = userContextService.getCurrentUser();
-        Long schoolId = currentUser.getSchool().getId();
-        Specification<GradeLevel> spec = Specification.where(GradeLevelSpecification.bySchoolId(schoolId));
+        School school = currentUser.getSchool();
+        EducationLevel level = school.getEducationLevel();
+        Specification<GradeLevel> spec = Specification.where(null);
+        if(!userContextService.isSuperAdmin()){
+            spec = spec.and(GradeLevelSpecification.byLevelId(level.getId()));
+        }
         if (searchTerm != null && !searchTerm.isEmpty()) {
             pageable = PageRequest.of(0, pageable.getPageSize(), pageable.getSort());
             spec = spec.and(GradeLevelSpecification.nameLike(searchTerm));
@@ -37,9 +42,6 @@ public class GradeLevelServiceImpl implements GradeLevelService {
 
     @Override
     public GradeLevel save(GradeLevel gradeLevel) {
-        LoggedInUserDto currentUser = userContextService.getCurrentUser();
-        School school = currentUser.getSchool();
-        gradeLevel.setSchool(school);
         return gradeLevelRepository.save(gradeLevel);
     }
 

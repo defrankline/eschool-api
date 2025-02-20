@@ -1,7 +1,8 @@
-package com.kachinga.eschool.config;
+package com.kachinga.eschool.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,6 +27,12 @@ public class SecurityConfiguration {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/auth/**", "/ws/**")
                         .permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/grade-levels", "/api/v1/grade-levels/**").hasRole("ESCHOOL_SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/grade-levels", "/api/v1/grade-levels/**").hasRole("ESCHOOL_SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/grade-levels", "/api/v1/grade-levels/**").hasRole("ESCHOOL_SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/subjects", "/api/v1/subjects/**").hasRole("ESCHOOL_SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/subjects", "/api/v1/subjects/**").hasRole("ESCHOOL_SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/subjects", "/api/v1/subjects/**").hasRole("ESCHOOL_SUPER_ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
